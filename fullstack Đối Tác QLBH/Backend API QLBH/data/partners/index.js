@@ -2,7 +2,6 @@
 const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
-const { input } = require('@tensorflow/tfjs-node');
 
 const getParners = async () => {
     try {

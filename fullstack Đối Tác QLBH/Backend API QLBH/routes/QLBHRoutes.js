@@ -20,6 +20,11 @@ router.delete('/deletemenuitem/:id', QLBHControll.delete_Menu_Item);
 router.put('/updatemenuitem/:id', QLBHControll.update_Menu_Item);
 //-------------------------restaurants------------------
 router.get('/restaurants/:id', QLBHControll.list_Restaurants_By_PartnerID);
+//--------------------------users-----------------------------
+router.get('/store', QLBHControll.getAllStores);
+router.get('/disk', QLBHControll.getAllDisks);
+router.get('/store/:id', QLBHControll.getStoreById);
+router.get('/disk/:id', QLBHControll.getDiskById);
 
 module.exports = {
     routes: router

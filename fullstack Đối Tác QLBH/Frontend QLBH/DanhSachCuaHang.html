@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <title>Danh sách cửa hàng</title>
+        <meta charset="utf-8">
+        <style>
+            
+        </style>
+        <!-- external -->
+        <link rel="stylesheet" href="./css/DanhSachCuaHang.css"> 
+        <script src="./js/DanhSachCuaHang.js"> </script>
+        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>    
+    </head>
+
+    <body>
+        <header class="middle">Tìm kiếm món ăn</header>
+            <div class="container">
+                <div style="text-align: center;", class="vertical-center">
+                    <input id="disk", type="text", placeholder="Tên món">
+                    <button onclick="getStores()" id="search">Tìm kiếm</button> 
+
+                    <p class="block">Giỏ hàng: </p>
+                    <a id="SoLuong" href="./ChiTietDonHang.html" role="button">
+                        0
+                      </a>
+                </div>
+            </div>
+        <main>
+            <div class="brand"></div>
+            <div  style="border:none;" class="container">
+                <div style="text-align: center;", class="vertical-center">
+                    <a id="redirect" href="./DanhSachMonAn.html" role="button">
+                        Tìm theo cửa hàng
+                     </a>
+                </div>  
+            </div>
+        </main>
+    </body>
+</html>

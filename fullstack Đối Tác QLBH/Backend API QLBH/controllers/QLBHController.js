@@ -4,6 +4,7 @@ const ParnerData = require('../data/partners');
 const MenuData = require('../data/menu');
 const MenuItemsData = require('../data/menuitems');
 const RestaurantsData = require('../data/restaurants');
+const UserData = require('../data/users');
 
 //--------------------------Partner-------------------------------------------
 const getAllParners = async (req, res, next) => {
@@ -126,8 +127,47 @@ const list_Restaurants_By_PartnerID = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
+//------------------------------Users-----------------------------
+const getAllStores = async (req, res, next) => {
+    try {
+        const storeList = await UserData.getStores();
+        res.send(storeList);        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getStoreById = async (req, res, next) => {
+    try {
+        const StoreId = req.params.id;
+        const store = await UserData.getOneStore(StoreId);
+        res.send(store);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getAllDisks = async (req, res, next) => {
+    try {
+        const diskList = await UserData.getDisks();
+        res.send(diskList);        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getDiskById = async (req, res, next) => {
+    try {
+        const DiskId = req.params.id;
+        const disk = await UserData.getOneDisk(DiskId);
+        res.send(disk);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 module.exports = {
     getAllParners, getParnerID, addParner, getMenuByParnerID, add_Menu_Item, 
     delete_Menu_Item, get_Menu_Item_By_Name, update_Menu_Item, list_Restaurants_By_PartnerID,
-    update_Menu_Item_For_Partner, get_Menu_Item_By_PartnerID, list_Contracts_By_PartnerID
+    update_Menu_Item_For_Partner, get_Menu_Item_By_PartnerID, list_Contracts_By_PartnerID, 
+    getAllStores, getStoreById, getAllDisks, getDiskById
 }
