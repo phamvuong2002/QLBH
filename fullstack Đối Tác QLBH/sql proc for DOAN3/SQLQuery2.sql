@@ -1,0 +1,262 @@
+CREATE 
+--ALTER
+PROC addMonAnDoiTac
+	@tenmon char(30),
+	@mieuta char(30),
+	@gia int,
+	@tinhtrang char(20),
+	@ghichu char(50),
+	@masothue char(15)
+AS
+BEGIN TRAN
+	IF(@tenmon IS NULL OR @mieuta IS NULL OR @gia IS NULL OR @tinhtrang IS NULL OR @ghichu IS NULL OR @masothue IS NULL)
+	BEGIN 
+		SELECT 'INFOMATION OF DISH IS NOT NULL' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+
+	IF EXISTS(SELECT TENMON FROM MONAN WITH(XLOCK) WHERE TENMON = @tenmon)
+	OR EXISTS(SELECT TENMON FROM MENU WITH(XLOCK) WHERE TENMON = @tenmon AND MASOTHUE = @masothue)
+	BEGIN
+		SELECT 'Name Of Dish Already Exists' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+
+	IF NOT EXISTS(SELECT MASOTHUE FROM DOITAC WITH(XLOCK) WHERE MASOTHUE = @masothue)
+	BEGIN
+		SELECT 'Partner Does Not Exist' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+
+	INSERT MONAN VALUES(@tenmon, @mieuta, @gia, @tinhtrang, 0, @ghichu)
+	INSERT MENU VALUES(@masothue, @tenmon)
+	SELECT MASOTHUE, MA.TENMON, MA.MIEUTA, MA.GIA, MA.TINHTRANG, MA.SLDABAN, MA.GHICHU  
+	FROM MENU ME JOIN MONAN MA ON ME.MASOTHUE = @masothue AND MA.TENMON = ME.TENMON and ME.TENMON = @tenmon
+COMMIT TRAN
+RETURN 1
+
+EXEC addMonAnDoiTac 'Banh Xeo', 'Mien Trung',15000, N'Còn Hàng', 'Nuoc Mam, Rau Song', 'tax0001'
+EXEC deleteMonAnDoiTac 'Banh Xeo'
+select *from MENU
+select *from MONAN
+select *from DOITAC
+
+CREATE 
+--ALTER
+PROC deleteMonAnDoiTac
+	@tenmon CHAR(30)
+AS
+BEGIN TRAN
+	IF NOT EXISTS(SELECT TENMON FROM MONAN WITH(XLOCK) WHERE TENMON = @tenmon)
+	BEGIN
+		SELECT 'Name Of Dish Is Not Found' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+
+	DELETE MENU
+	WHERE TENMON = @tenmon
+
+	DELETE MONAN
+	WHERE TENMON = @tenmon
+
+	IF EXISTS(SELECT TENMON FROM PHUCVU WITH(XLOCK) WHERE TENMON = @tenmon)
+	BEGIN	
+		DELETE PHUCVU
+		WHERE TENMON = @tenmon
+	END
+
+	SELECT 'DELETED MON AN SUCCESSFULLY' AS '1'
+COMMIT TRAN
+RETURN 1
+
+exec listMonAnByDoiTac 'tax0001'
+CREATE
+--ALTER
+PROC getMenuItemsByName
+	@tenmon CHAR(30)
+AS
+BEGIN
+	IF NOT EXISTS(SELECT TENMON FROM MONAN WHERE TENMON = @tenmon)
+	BEGIN
+		SELECT 'NAME OF DISH IS NOT FOUND' AS 'ERROR'
+		RETURN 0
+	END
+	SELECT * FROM MONAN WHERE TENMON = @tenmon
+	RETURN 1
+END
+
+EXEC getMenuItemsByName 'Mon A'
+
+-- UPDATE MON AN
+CREATE
+--ALTER
+PROC updateMonAn
+	@tenmon CHAR(30),
+	@mieuta char(30),
+	@gia int,
+	@tinhtrang char(20),
+	@sldaban INT,
+	@ghichu char(50)
+AS
+BEGIN TRAN
+	IF NOT EXISTS (SELECT TENMON FROM MONAN WITH(XLOCK) WHERE TENMON = @tenmon)
+	BEGIN
+		SELECT 'NAME OF DISH IS NOT FOUND' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+	-----------UPDATE--------------
+	IF (@mieuta IS NOT NULL) -- UPDATE MIEU TA 
+		AND (@mieuta <> '')
+	BEGIN
+		UPDATE MONAN
+		SET MIEUTA = @mieuta
+		WHERE TENMON = @tenmon
+	END
+	IF (@gia IS NOT NULL) -- UPDATE GIA
+		AND (@gia <> '')
+	BEGIN
+		UPDATE MONAN
+		SET GIA = @gia
+		WHERE TENMON = @tenmon
+	END
+	IF (@tinhtrang IS NOT NULL)-- UPDATE TINH TRANG
+	AND (@tinhtrang <> '')
+	BEGIN
+		UPDATE MONAN
+		SET TINHTRANG = @tinhtrang
+		WHERE TENMON = @tenmon
+	END
+	IF (@sldaban IS NOT NULL) -- UPDATE SL DA BAN
+	AND (@sldaban <> '')
+	BEGIN
+		UPDATE MONAN
+		SET SLDABAN = @sldaban
+		WHERE TENMON = @tenmon
+	END
+	IF @ghichu IS NOT NULL -- UPDATE GHI CHU
+	AND (@ghichu <> '')
+	BEGIN
+		UPDATE MONAN
+		SET GHICHU = @ghichu
+		WHERE TENMON = @tenmon
+	END
+	SELECT *FROM MONAN WHERE TENMON = @tenmon
+COMMIT TRAN
+RETURN 1
+
+EXEC getMenuItemsByName 'Mon A'
+EXEC updateMonAn 'Mon A', null, null, null, null, 'Co nuoc dung'
+
+
+-- UPDATE MON AN FOR PARTNER
+CREATE
+--ALTER
+PROC updateMonAnForPartner
+	@masothue CHAR(15),
+	@tenmon CHAR(30),
+	@mieuta char(30),
+	@gia int,
+	@tinhtrang char(20),
+	@sldaban INT,
+	@ghichu char(50)
+AS
+BEGIN TRAN
+	IF NOT EXISTS(SELECT MASOTHUE FROM DOITAC WHERE MASOTHUE = @masothue)
+	BEGIN
+		SELECT 'PARTNER IS NOT FOUND' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+	IF NOT EXISTS (SELECT TENMON FROM MONAN WITH(XLOCK) WHERE TENMON = @tenmon)
+	BEGIN
+		SELECT 'NAME OF FOOD IS NOT FOUND' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+	IF NOT EXISTS(SELECT TENMON FROM MENU WITH(XLOCK) WHERE TENMON = @tenmon AND MASOTHUE = @masothue)
+	BEGIN
+		SELECT 'PARTNER HAS NOT THIS FOOD' AS 'ERROR'
+		ROLLBACK TRAN
+		RETURN 0
+	END
+	-----------UPDATE--------------
+	IF (@mieuta IS NOT NULL) -- UPDATE MIEU TA 
+		AND (@mieuta <> '')
+	BEGIN
+		UPDATE MONAN
+		SET MIEUTA = @mieuta
+		WHERE TENMON = @tenmon
+	END
+	IF (@gia IS NOT NULL) -- UPDATE GIA
+		AND (@gia <> '')
+	BEGIN
+		UPDATE MONAN
+		SET GIA = @gia
+		WHERE TENMON = @tenmon
+	END
+	IF (@tinhtrang IS NOT NULL)-- UPDATE TINH TRANG
+	AND (@tinhtrang <> '')
+	BEGIN
+		UPDATE MONAN
+		SET TINHTRANG = @tinhtrang
+		WHERE TENMON = @tenmon
+	END
+	IF (@sldaban IS NOT NULL) -- UPDATE SL DA BAN
+	AND (@sldaban <> '')
+	BEGIN
+		UPDATE MONAN
+		SET SLDABAN = @sldaban
+		WHERE TENMON = @tenmon
+	END
+	IF @ghichu IS NOT NULL -- UPDATE GHI CHU
+	AND (@ghichu <> '')
+	BEGIN
+		UPDATE MONAN
+		SET GHICHU = @ghichu
+		WHERE TENMON = @tenmon
+	END
+	SELECT *FROM MONAN WHERE TENMON = @tenmon
+COMMIT TRAN
+RETURN 1
+
+EXEC  updateMonAnForPartner 'tax0001','Mon B', null, null, null, null, 'Co Them Canh'
+SELECT *FROM MONAN WHERE TENMON = 'Mon B'
+select *from DOITAC where MASOTHUE = 'tax0001'
+
+CREATE
+--ALTER
+PROC findMonAnofPartner
+	@masothue CHAR(15),
+	@tenmon CHAR(30)
+AS
+BEGIN
+	IF NOT EXISTS(SELECT MASOTHUE FROM DOITAC WHERE MASOTHUE = @masothue)
+	BEGIN
+		SELECT 'PARTNER IS NOT FOUND' AS 'ERROR'
+		RETURN 0
+	END
+
+	IF NOT EXISTS(SELECT TENMON FROM MONAN WHERE TENMON = @tenmon)
+	BEGIN
+		SELECT 'FOOD IS NOT FOUND' AS 'ERROR'
+		RETURN 0
+	END
+
+	IF EXISTS (SELECT * FROM MENU WHERE MASOTHUE = @masothue AND TENMON = @tenmon)
+	BEGIN
+		SELECT * FROM MONAN WHERE TENMON = @tenmon
+	END
+	ELSE
+	BEGIN
+		SELECT 'PARTNER HAS NOT THIS FOOD' AS 'ERROR'
+		RETURN 0
+	END
+END
+RETURN 1
+
+EXEC findMonAnofPartner 'tax0001', 'Mon A'

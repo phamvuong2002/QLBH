@@ -2,6 +2,7 @@
 const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
+const { input } = require('@tensorflow/tfjs-node');
 
 const getParners = async () => {
     try {
@@ -50,6 +51,52 @@ const creatParner = async (data) => {
     }
 }
 
+const updateMenuItemForPartner = async (data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('partners');
+        const update = await pool.request()
+                            .input('masothue', sql.Char(15), data.masothue)
+                            .input('tenmon', sql.Char(30), data.tenmon)
+                            .input('mieuta', sql.Char(30), data.mieuta)
+                            .input('gia', sql.Int, data.gia)
+                            .input('tinhtrang', sql.Char(20), data.tinhtrang)
+                            .input('sldaban', sql.Int, data.sldaban)
+                            .input('ghichu', sql.Char(50), data.ghichu)
+                            .query(sqlQueries.updatemenuitem);
+        return update.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const getMenuItemByPartnerID = async(data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('partners');
+        const food = await pool.request()
+                            .input('masothue', sql.Char(15), data.masothue)
+                            .input('tenmon', sql.Char(30), data.tenmon)
+                            .query(sqlQueries.getmenuitembypartnerid);
+        return food.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const listContractByPartnerID = async(ParnerID) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('partners');
+        const contracts = await pool.request()
+                            .input('masothue', sql.Char(15), ParnerID)
+                            .query(sqlQueries.listcontractsbypartnerid);
+        return contracts.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
 module.exports = {
-    getParners, getParnerById, creatParner
+    getParners, getParnerById, creatParner, updateMenuItemForPartner, getMenuItemByPartnerID,
+    listContractByPartnerID
 }

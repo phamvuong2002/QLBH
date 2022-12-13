@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Menu Items</title>
+    <link rel="stylesheet" href = "css/add_menu_items.css">
+</head>
+<body>
+    <div class = "topnav">
+        <h3>Thêm Món Ăn</h3>
+    </div>
+
+    <form id = "myform" action="">
+        <div class = "container">
+            <div class="field">
+                <label for="tenmonan">Ten Mon An</label>
+                <input type="text" placeholder="Nhap ten mon an..." name="tenmon"  required>
+            </div>
+            <div class="field">
+                <label for="mieuta">Mieu Ta Mon</label>
+                <input type="text" placeholder="Mieu ta mon..." name="mieuta"  required>
+            </div>
+            <div class="field">
+                <label for="gia">Gia</label>
+                <input type="text" placeholder="Nhap Gia..." name="gia"  required>
+            </div>
+            <div class="field">
+                <label for="tinhtrang">Tinh Trang</label>
+                <input type="text" placeholder="Dang ban/ Ngung ban..." name="tinhtrang"  required>
+            </div>
+            <div class="field">
+                <label for="ghichu">Ghi Chu</label>
+                <input type="text" placeholder="Ghi chu..." name="ghichu"  required>
+            </div>
+            <div class="field">
+                <label for="masothue">Ma So Thue</label>
+                <input type="text" placeholder="ma so thue" name="masothue"  required>
+            </div>
+        </div>
+        <div class="button">
+            <button onclick="getData()" type="submit" id="abutton">Them</button>
+        </div>
+    </form>
+    <div class="button">
+        <button onclick="addMenuForResButton()" type="submit" id="abutton" >Quan Ly Cua Hang</button>
+    </div>
+    <div class="button">
+        <button onclick="cancleButton()" type="submit" id="abutton" >Quay Lai</button>
+    </div>
+    <script src="js/add_menu_items_script.js"></script>
+</body>
+</html>

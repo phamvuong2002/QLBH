@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <title>Manage Menu</title>
-    <link rel="stylesheet" href = "style.css">
+    <link rel="stylesheet" href = "css/manage_menu.css">
 </head>
 <body>
     <div class="topnav">
         <h3 id="title">Cac Mon An Cua Doi Tac</h3>
         <form action="" id ="form">
             <label for="search" ><b>Search</b></label>
-            <input type="search" id = "query" placeholder="Ma Doi Tac..." name="masothue" >
+            <input type="text" id = "query" placeholder="Ma Doi Tac..." name="masothue" required>
             <button type="submit" name="Submit" id ="sbutton"  > Tim Kiem</button>
-            <button type="click" name="Submit" id ="cbutton" onclick="tocreateMonAn()" > Them Mon</button>
-            <button type="click" name="Submit" id ="ubutton" onclick="toupdateMonAn()" > Cap Nhat Mon</button>
         </form>
+        <button type="click" name="Submit" id ="cbutton" onclick="tocreateMonAn()" > Them Mon</button>
+        <button type="click" name="Submit" id ="ubutton" onclick="toupdateMonAn()" > Cap Nhat Mon</button>
     </div>
     
     <div class = "container">
@@ -49,6 +49,6 @@
     </div>
 
     
-    <script src="scrip_managemenu.js"></script>
+    <script src="js/manage_menu_script.js"></script>
 </body>
 </html>

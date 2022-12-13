@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Partner Home Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('/img/background.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+</head>
+<body>
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    PARTNER PAGE
+  </div>
+  <div class="w3-display-middle">
+    <h1 class="w3-jumbo w3-animate-top">PARTNER FUNCTIONS</h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+    <div class="">
+        <div class="button-wrapper" data-tippy-content="Click to copy button 80">
+          <button class="button-80" role="button" onclick="tomenupage()">TO MENU PAGE </button>
+          <button class="button-81" role="button" onclick="tosignuppage()">TO PARTNER SIGN UP PAGE </button>
+        </div>
+    </div>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Copyright w3schools 
+    Edit by PhamVuong
+  </div>
+</div>
+<script>
+    function tomenupage(){
+        location.href = "/manage_menu.html"
+    }
+    function tosignuppage(){
+        location.href = "/partner_signup.html"
+    }
+</script>
+</body>
+</html>

@@ -12,38 +12,50 @@ div.topnav {
     padding: 5px 5px;
     box-shadow: #A9A9A9 2px 2px;
 }
+.topnav label{
+    float: left;
+    margin: 10px 0 5px 0;
+}
 #title{
     position: relative;
-    left: 40px;
+    left: 40%;
+    
+}
+
+.title{
+    font-size: 15px;
+    font-weight: bold;
 }
 /* Full-width input fields */
-  input[type=text], input[type=password] {
-  padding: 10px;
-  display: inline-block;
-  border: none;
-  width:20%;
-  resize: vertical;
-  border: 1px;
-  box-shadow:4px 4px 10px rgba(0,0,0,0.2);
+input[type=text], input[type=password] {
+    float: left;
+    padding: 10px;
+    display: inline-block;
+    border: none;
+    width:20%;
+    resize: vertical;
+    border: 1px solid;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.2);
 }
 
 #sbutton{
-    position: relative;
-    left: 10%;
+    float: right;
     width: 20%;
-    height: 40px;
+    height: 60px;
     border: 1px solid;
     background: purple;
     font-size: 18px;
     font-family: sans-serif;
     color: #e9f4fb;
     cursor: pointer;
+    padding: 10px 10px;
+    margin: 0px 10px 5px 0;
 }
 
 #cbutton{
     position: relative;
-    left: 20%;
-    top: -50px;
+    left: 60%;
+    top: -70px;
     width: 20%;
     height: 40px;
     border: 1px solid;
@@ -54,35 +66,6 @@ div.topnav {
     cursor: pointer;
 }
 
-#ubutton{
-    position: relative;
-    left: -5px;
-    top: 0px;
-    width: 20%;
-    height: 40px;
-    border: 1px solid;
-    background: purple;
-    font-size: 18px;
-    font-family: sans-serif;
-    color: #e9f4fb;
-    cursor: pointer;
-}
-
-#dbutton{
-    float: right;
-    position: relative;
-    top: -5px;
-    right: 5px;
-    width: 10%;
-    height: 40px;
-    border: 1px solid;
-    background: purple;
-    font-size: 18px;
-    font-family: sans-serif;
-    color: #e9f4fb;
-    cursor: pointer;
-    padding: 5px 5px;
-}
 
 .container{
     margin: 10px 0 15px 0;
@@ -101,6 +84,6 @@ div.card {
 
 .colum{
     float: left;
-    width: 30%;
+    width: 25%;
     padding: 5px 5px;
 }
