@@ -1,5 +1,4 @@
 var id = null;
-var count = 0;
 var order = [];
 
 const toText= {
@@ -7,6 +6,14 @@ const toText= {
     "MIEUTA": "Miêu tả",
     "GIA": "Giá"
 };
+
+function getCol(matrix, col){
+    var column = [];
+    for(var i=0; i<matrix.length; i++){
+       column.push(matrix[i][col]);
+    }
+    return column;
+}
 
 function getDiskes(){
     var food = document.getElementsByClassName('food');
@@ -19,17 +26,10 @@ function getDiskes(){
     fetch(url)
     .then(response => response.json()) //convert to object
     .then(data => handleData(data));
-        // console.log(data.Result);
-        // this.setState({
-        //     list:data.Result
-        // });
-    function handleData(data) {
-        console.log("aaaaaa",data);
 
+    function handleData(data) {
         let tableData = "";   
-        data.map((values) => {
-            // console.log(values.MIEUTA);
-        
+        data.map((values) => {        
         const key = Object.keys(values);
 
         
@@ -54,19 +54,22 @@ function getDiskes(){
         select.innerText = "Chọn";
         select.setAttribute("id", "select");
         select.onclick = () => {
-            count += 1;
-            document.getElementById("SoLuong").innerHTML = count;
-
             var name = dataTable.rows[0].cells[1].innerHTML;
             var price = dataTable.rows[2].cells[1].innerHTML;
             var column = getCol(order, 0);
             var index = column.indexOf(name);
-            if (index != -1)
-                order[index][1] += 1;
-            else
-                order.push([name, 1, parseInt(price)]);
-            console.log(order);
 
+            if (index != -1){
+                order[index][2] += 1;
+                order[index][3] += order[index][1];
+            }
+            else
+                order.push([name, parseInt(price), 1, parseInt(price)]);
+
+            document.getElementById("SoLuong").innerHTML = order.length;
+            console.log(order.length);
+            console.log(order);
+            return order;
         };
 
         disk.appendChild(dataTable);
@@ -76,11 +79,4 @@ function getDiskes(){
     }
 }
 
-function getCol(matrix, col){
-    var column = [];
-    for(var i=0; i<matrix.length; i++){
-       column.push(matrix[i][col]);
-    }
-    return column;
-}
-
+module.exports = {order}
