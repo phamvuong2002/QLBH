@@ -1,5 +1,6 @@
 var id = null;
 var count = 0;
+var order = [];
 
 const toText= {
     "TENMON": "Tên món",
@@ -55,6 +56,17 @@ function getDiskes(){
         select.onclick = () => {
             count += 1;
             document.getElementById("SoLuong").innerHTML = count;
+
+            var name = dataTable.rows[0].cells[1].innerHTML;
+            var price = dataTable.rows[2].cells[1].innerHTML;
+            var column = getCol(order, 0);
+            var index = column.indexOf(name);
+            if (index != -1)
+                order[index][1] += 1;
+            else
+                order.push([name, 1, parseInt(price)]);
+            console.log(order);
+
         };
 
         disk.appendChild(dataTable);
@@ -64,5 +76,11 @@ function getDiskes(){
     }
 }
 
-
+function getCol(matrix, col){
+    var column = [];
+    for(var i=0; i<matrix.length; i++){
+       column.push(matrix[i][col]);
+    }
+    return column;
+}
 
