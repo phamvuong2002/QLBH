@@ -1,5 +1,5 @@
 var id = null;
-var order = [];
+var order = JSON.parse(localStorage.getItem('order') || '[]');
 
 const toText= {
     "TENMON": "Tên món",
@@ -18,6 +18,7 @@ function getCol(matrix, col){
 function getDiskes(){
     var food = document.getElementsByClassName('food');
     $('.food').empty();
+    console.log("ORDER", order);
 
     id = document.getElementById('store').value;
     const url = `http://localhost:8080/api/store/${id}`;
@@ -57,19 +58,21 @@ function getDiskes(){
             var name = dataTable.rows[0].cells[1].innerHTML;
             var price = dataTable.rows[2].cells[1].innerHTML;
             var column = getCol(order, 0);
+            // console.log("a", column);
             var index = column.indexOf(name);
+            // console.log("i", index);
 
             if (index != -1){
                 order[index][2] += 1;
                 order[index][3] += order[index][1];
             }
             else
+                // order.push({"TENMON": name, "GIA": parseInt(price),"SOLUONG": 1, "THANHTIEN": parseInt(price)});
                 order.push([name, parseInt(price), 1, parseInt(price)]);
 
             document.getElementById("SoLuong").innerHTML = order.length;
-            console.log(order.length);
-            console.log(order);
-            return order;
+            // console.log("LENGTH", order.length);
+            console.log("ORDER", order);
         };
 
         disk.appendChild(dataTable);
@@ -77,6 +80,5 @@ function getDiskes(){
         food[0].appendChild(disk);
         });
     }
-}
 
-module.exports = {order}
+}

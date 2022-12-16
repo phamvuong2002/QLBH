@@ -1,6 +1,5 @@
 var id = null;
-var count = 0;
-var order = [];
+var order = JSON.parse(localStorage.getItem('order'));
 
 const toText= {
     "TENQUAN": "Tên cửa hàng",
@@ -20,7 +19,8 @@ function getCol(matrix, col){
 function getStores(){
     var brand = document.getElementsByClassName('brand');
     $('.brand').empty();
-
+    console.log("ORDER", order);
+    
     id = document.getElementById('disk').value;
     const url = `http://localhost:8080/api/disk/${id}`;
     // alert(url);
@@ -57,19 +57,20 @@ function getStores(){
             var name = dataTable.rows[1].cells[1].innerHTML;
             var price = dataTable.rows[3].cells[1].innerHTML;
             var column = getCol(order, 0);
+            // console.log("a", column);
             var index = column.indexOf(name);
-            
+            // console.log("i", index); 
+
             if (index != -1){
                 order[index][2] += 1;
                 order[index][3] += order[index][1];
             }
             else
                 order.push([name, parseInt(price), 1, parseInt(price)]);
-
+    
             document.getElementById("SoLuong").innerHTML = order.length;
-            console.log(order.length);
-            console.log(order);
-            return order;
+            console.log("LENGTH", order.length);
+            console.log("ORDER", order);
         };
 
         branch.appendChild(dataTable);
