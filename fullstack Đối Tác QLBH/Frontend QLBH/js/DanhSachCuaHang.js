@@ -1,5 +1,5 @@
 var id = null;
-var order = JSON.parse(localStorage.getItem('order'));
+var order = JSON.parse(localStorage.getItem('order') || '[]');
 
 const toText= {
     "TENQUAN": "Tên cửa hàng",
@@ -16,10 +16,15 @@ function getCol(matrix, col){
     return column;
 }
 
+function start(){
+    document.getElementById("SoLuong").innerHTML = order.length;
+}
+
 function getStores(){
+    document.getElementById("SoLuong").innerHTML = order.length;
     var brand = document.getElementsByClassName('brand');
     $('.brand').empty();
-    console.log("ORDER", order);
+    // console.log("ORDER", order);
     
     id = document.getElementById('disk').value;
     const url = `http://localhost:8080/api/disk/${id}`;
@@ -66,11 +71,12 @@ function getStores(){
                 order[index][3] += order[index][1];
             }
             else
-                order.push([name, parseInt(price), 1, parseInt(price)]);
+                order.push([name, parseFloat(price), 1, parseFloat(price)]);
     
             document.getElementById("SoLuong").innerHTML = order.length;
-            console.log("LENGTH", order.length);
+            // console.log("LENGTH", order.length);
             console.log("ORDER", order);
+            localStorage.setItem('order', JSON.stringify(order));
         };
 
         branch.appendChild(dataTable);

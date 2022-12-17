@@ -1,3 +1,8 @@
-var order = [];
+var order = JSON.parse(localStorage.getItem('order') || '[]');
 
-localStorage.setItem('order', JSON.stringify(order));
+function pay(){
+    
+
+    localStorage.removeItem('order');
+    // alert("clicked");
+}

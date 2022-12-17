@@ -1,4 +1,5 @@
 var id = null;
+
 var order = JSON.parse(localStorage.getItem('order') || '[]');
 
 const toText= {
@@ -15,10 +16,13 @@ function getCol(matrix, col){
     return column;
 }
 
+function start(){
+    document.getElementById("SoLuong").innerHTML = order.length;
+}
+
 function getDiskes(){
     var food = document.getElementsByClassName('food');
     $('.food').empty();
-    console.log("ORDER", order);
 
     id = document.getElementById('store').value;
     const url = `http://localhost:8080/api/store/${id}`;
@@ -68,11 +72,12 @@ function getDiskes(){
             }
             else
                 // order.push({"TENMON": name, "GIA": parseInt(price),"SOLUONG": 1, "THANHTIEN": parseInt(price)});
-                order.push([name, parseInt(price), 1, parseInt(price)]);
+                order.push([name, parseFloat(price), 1, parseFloat(price)]);
 
             document.getElementById("SoLuong").innerHTML = order.length;
             // console.log("LENGTH", order.length);
             console.log("ORDER", order);
+            localStorage.setItem('order', JSON.stringify(order));
         };
 
         disk.appendChild(dataTable);
@@ -80,5 +85,4 @@ function getDiskes(){
         food[0].appendChild(disk);
         });
     }
-
 }
