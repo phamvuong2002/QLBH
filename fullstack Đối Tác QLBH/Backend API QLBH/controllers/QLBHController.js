@@ -137,7 +137,7 @@ const getAllStores = async (req, res, next) => {
     }
 }
 
-const getStoreById = async (req, res, next) => {
+const getStoreByName = async (req, res, next) => {
     try {
         const StoreId = req.params.id;
         const store = await UserData.getOneStore(StoreId);
@@ -165,9 +165,61 @@ const getDiskById = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
+
+const getOrderByID = async (req, res, next) => {
+    try {
+        const UserId = req.params.id;
+        const orderList = await UserData.getOneOrders(UserId);
+        res.send(orderList);        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const postOrder = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const order = await UserData.postOneOrder(data);
+        res.send(order);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const postOrderStore = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const order = await UserData.postOneOrderStore(data);
+        res.send(order);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const postOrderDetail = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const order = await UserData.postOneOrderDetail(data);
+        res.send(order);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const postFeedback = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const order = await UserData.postOneFeedback(data);
+        res.send(order);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 module.exports = {
     getAllParners, getParnerID, addParner, getMenuByParnerID, add_Menu_Item, 
     delete_Menu_Item, get_Menu_Item_By_Name, update_Menu_Item, list_Restaurants_By_PartnerID,
     update_Menu_Item_For_Partner, get_Menu_Item_By_PartnerID, list_Contracts_By_PartnerID, 
-    getAllStores, getStoreById, getAllDisks, getDiskById
+    getAllStores, getStoreByName, getAllDisks, getDiskById, getOrderByID, postOrder, postFeedback,
+    postOrderStore, postOrderDetail 
 }

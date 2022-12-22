@@ -10,9 +10,10 @@
         <link rel="stylesheet" href="./css/ChiTietDonHang.css"> 
         <script src="./js/ChiTietDonHang.js"> </script>
         <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
 
-    <body>
+    <body onpageshow="start()">
         <header class="middle">Chi tiết đơn hàng</header>
             <div class="container">
                 <div class="vertical-center">          
@@ -21,56 +22,21 @@
                 </div>
             </div>
         <main>
-            <div class="bill">
-                <div id="detail">
-                    <table>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên món</th>
-                            <th>Đơn giá</th>
-                            <th>Số lượng</th>
-                            <th>Ghi chú</th>
-                            <th>Thành tiền</th> 
-                        </tr>
-                        <tr>
-                            <td><label for="">STT</label></td>
-                            <td><label for="">Tên món</label></td>
-                            <td><label for="">Đơn giá</label></td>
-                            <td><label for="">Số lượng</label></td>
-                            <td><label for="">Ghi chú</label></td>
-                            <td><label for="">Thành tiền</label></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            <div class="bill"></div>
             <div>
                 <select id="payment", name="Hình thức thanh toán">
                     <option value ="null">Hình thức thanh toán</option>
                     <option value ="COD">COD</option>
-                    <option value ="Internet banking">Internet banking</option>
-                    <option value ="Momo">Momo</option>
-                    <option value ="VNPay">VNPay</option>
+                    <option value ="Trực tuyến">Internet banking</option>
                 </select>
-                <input style="margin-left:1%; text-align:center; font-size:20px;", type="text", placeholder="Địa chỉ giao hàng">
-                <!-- <p> The value of the option selected is: 
-                        <span class="output"></span> 
-                    </p>
-                    <button onclick="getOption()">Check option</button>
-                    <script type="text/javascript">
-                
-                    function getOption() {
-                        selectElement = document.querySelector('#payment');
-                        output = selectElement.options[selectElement.selectedIndex].value;
-                        document.querySelector('.output').textContent = output;
-                    }
-                    </script>    -->
+                <input id="address" type="text" placeholder="Địa chỉ giao hàng">
             </div>
             <div style="margin-top:1%;">
                 <label id="ship", for="">Ship</label>
                 <label id="sum",for="">Sum</label>
             </div>
             <div style="margin-top:1.5%;">
-                <a class="button" id="redirect" href="./TheoDoiDonHang.html" role="button" onclick="pay()" style="padding: 0.5%; border: 1px solid black;">
+                <a class="button" role="button" onclick="pay()" style="padding: 0.5%; border: 1px solid black;">
                     Thanh toán
                 </a>             
             </div>

@@ -26,8 +26,8 @@
         <header class="middle">Tìm kiếm thông tin món ăn của cửa hàng</header>
             <div class="container">
                 <div style="text-align: center;", class="vertical-center">
-                    <input id="store", type="text", placeholder="Mã cửa hàng">                    
-                    <button onclick="getDiskes()" id="search">Tìm kiếm</button> 
+                    <input id="store", type="text", placeholder="Cửa hàng">                    
+                    <button onclick="getDisks()" id="search">Tìm kiếm</button> 
 
                     <p class="block">Giỏ hàng: </p>
                     <a id="SoLuong" href="./ChiTietDonHang.html" role="button">
@@ -38,9 +38,9 @@
             <div class="food"></div>
             <div  style="border:none;" class="container">
                 <div style="text-align: center;", class="vertical-center">
-                    <a id="redirect" href="./DanhSachCuaHang.html" role="button">
+                    <button id = "redirect" onclick="emptyStorage()">
                         Tìm theo món ăn
-                    </a>
+                    </button>
                 </div>
             </div>
         </main>     
