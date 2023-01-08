@@ -1,1 +1,0 @@
-EXEC [dbo].[addMonAnDoiTac] @tenmon, @mieuta, @gia, @tinhtrang, @ghichu, @masothue

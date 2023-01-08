@@ -1,8 +1,5 @@
 //const url = "https://webhook.site/f1de2a56-4094-4692-bacb-d4013b7e67de";
 const url = "http://localhost:8080/api/addparner";
-//--------------------------TEST public API------------------
-// const url = "https://a4b7-1-52-147-128.ap.ngrok.io/api/addparner";
-
 
 async function makeAPICall() {
     
@@ -43,7 +40,7 @@ function createResponedDisplay(json){
             const divbutton = document.getElementsByClassName("button")// tag contain button
             const newbutton = document.createElement("button")
             newbutton.setAttribute("id", "signupButton")//set id
-            newbutton.appendChild(document.createTextNode("Quan Ly Menu"))
+            newbutton.appendChild(document.createTextNode("To Menu Page"))
             newbutton.type = "tomenupage" //set new type
             newbutton.onclick = function(){ //set new onclick funtion
                 location.href = "manage_menu.html"

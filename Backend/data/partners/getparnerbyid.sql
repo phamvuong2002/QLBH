@@ -1,0 +1,2 @@
+
+EXEC [dbo].[GetParnersByID] @masothue
